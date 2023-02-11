@@ -2,7 +2,7 @@ document.getElementById("load-periodic-table").addEventListener("click", functio
     // Navigate to the second HTML file
     window.location.href = "app.html";
 });
-import { names } from './app.js';
+import { names } from './periodicTable.js';
 
 const thisString = 'Mary';
 if (data && names && names.includes(thisString)) {
