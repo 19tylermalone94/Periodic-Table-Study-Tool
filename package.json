@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "element_flashcards",
+  "name": "Periodic-Table-Study-Tool",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
