@@ -45,7 +45,6 @@ const categoryColors = {
 
 const periodicTable = document.getElementById("periodic-table");
 const elements = document.querySelectorAll("td.element")
-const myButton = document.getElementById("load-flashcard-maker");
 const div2 = document.getElementById("bot");
 const div1 = document.getElementById("top");
 const loadFlashCardsButton = document.getElementById("load-flashcard-maker");
@@ -64,7 +63,7 @@ for (let i = 0; i < elements.length; i++) {
         elements[i].style.backgroundColor = "yellow";
         numHighlighted++;
       }
-      myButton.disabled = (numHighlighted == 0) ? true : false; 
+      loadFlashCardsButton.disabled = (numHighlighted == 0) ? true : false; 
     });
   }
 
@@ -115,28 +114,29 @@ function getColor(arrayIndex) {
     return color;
 }
 
-document.getElementById("selectAll").addEventListener("click", function() {
-    if (document.getElementById("selectAll").innerText == "select all") {
+selectAllButton.addEventListener("click", function() {
+    if (selectAllButton.innerText == "select all") {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.backgroundColor = "yellow";
-            myButton.disabled = false;
-            document.getElementById("selectAll").innerText = "un-select all";
+            loadFlashCardsButton.disabled = false;
+            selectAllButton.innerText = "un-select all";
             numHighlighted = 180;
         }
     }
     else {
         for (let i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = getCategory(elements[i].innerText);
-            myButton.disabled = true;
-            document.getElementById("selectAll").innerText = "select all";
+            let elementSymbol = elements[i].innerText
+            elements[i].style.backgroundColor = getCategory(elementSymbol);
+            loadFlashCardsButton.disabled = true;
+            selectAllButton.innerText = "select all";
             numHighlighted = 0;
         }
     }
 });
 
 loadFlashCardsButton.addEventListener("click", function() {
-    document.body.removeChild(periodicTable);
-    div1.removeChild(loadFlashCardsButton);
-    div2.removeChild(selectAllButton);
+    periodicTable.remove();
+    loadFlashCardsButton.remove();
+    selectAllButton.remove();
 });
 
