@@ -1,7 +1,4 @@
-export const names = [
-    'John',
-    'Mary'
-]
+
 const elementCategoryArray = [
     //Alkali Metals
     ["Li", "Na", "K", "Rb", "Cs", "Fr"],
@@ -34,11 +31,44 @@ const elementCategoryArray = [
     ["Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lw"]
 ];
 
-const categoryColors = {Alkali: "Plum", Alkaline: "MediumOrchid", Transition: "SlateBlue", 
-PostTransition: "SkyBlue", Metalloid: "YellowGreen", NonMetal: "LightSalmon", Halogen: "Tomato", 
-NobleGas: "DarkOrange", Lanthanide: "Khaki", Actinide: "DarkKhaki"};
+const categoryColors = {
+    Alkali: "Plum", 
+    Alkaline: "MediumOrchid", 
+    Transition: "SlateBlue", 
+    PostTransition: "SkyBlue", 
+    Metalloid: "YellowGreen", 
+    NonMetal: "LightSalmon", 
+    Halogen: "Tomato", 
+    NobleGas: "DarkOrange", 
+    Lanthanide: "Khaki", 
+    Actinide: "DarkKhaki"};
 
-function getCategory (elementSymbol) {
+const periodicTable = document.getElementById("periodic-table");
+const elements = document.querySelectorAll("td.element")
+const myButton = document.getElementById("load-flashcard-maker");
+const div2 = document.getElementById("bot");
+const div1 = document.getElementById("top");
+const loadFlashCardsButton = document.getElementById("load-flashcard-maker");
+const selectAllButton = document.getElementById("selectAll");
+
+
+let numHighlighted = 0;
+for (let i = 0; i < elements.length; i++) {
+    elements[i].style.backgroundColor = getCategory(elements[i].innerText);
+    elements[i].addEventListener("click", function() {
+      if (elements[i].style.backgroundColor === "yellow") {
+        elements[i].style.backgroundColor = getCategory(elements[i].innerText);
+        numHighlighted--;
+        console.log(numHighlighted);
+      } else {
+        elements[i].style.backgroundColor = "yellow";
+        numHighlighted++;
+      }
+      myButton.disabled = (numHighlighted == 0) ? true : false; 
+    });
+  }
+
+  function getCategory (elementSymbol) {
     for (let i = 0; i < elementCategoryArray.length; i++) {
         for (let j = 0; j < elementCategoryArray[i].length; j++) {
             if (elementSymbol == elementCategoryArray[i][j]) {
@@ -84,31 +114,8 @@ function getColor(arrayIndex) {
     }
     return color;
 }
-const elements = document.querySelectorAll("td.element")
-const myButton = document.getElementById("load-flashcard-maker");
-let numHighlighted = 0;
-for (let i = 0; i < elements.length; i++) {
-    elements[i].style.backgroundColor = getCategory(elements[i].innerText);
-    elements[i].addEventListener("click", function() {
-      if (elements[i].style.backgroundColor === "yellow") {
-        elements[i].style.backgroundColor = getCategory(elements[i].innerText);
-        numHighlighted--;
-      } else {
-        elements[i].style.backgroundColor = "yellow";
-        numHighlighted++;
-      }
-      if (numHighlighted < 1) {
-        myButton.disabled = true;
-      }
-      if (numHighlighted >= 1) {
-        myButton.disabled = false;
-      }
-    });
-  }
-  document.getElementById("load-flashcard-maker").addEventListener("click", function() {
-    window.location.href = "flashcards.html";
-  });
-  document.getElementById("selectAll").addEventListener("click", function() {
+
+document.getElementById("selectAll").addEventListener("click", function() {
     if (document.getElementById("selectAll").innerText == "select all") {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.backgroundColor = "yellow";
@@ -125,7 +132,11 @@ for (let i = 0; i < elements.length; i++) {
             numHighlighted = 0;
         }
     }
-  });
+});
 
-  
+loadFlashCardsButton.addEventListener("click", function() {
+    document.body.removeChild(periodicTable);
+    div1.removeChild(loadFlashCardsButton);
+    div2.removeChild(selectAllButton);
+});
 
